@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ja">
 <head>
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <title>測定値記入表</title>
@@ -28,7 +29,20 @@ function render(){const p=curP(); $('#dateLabel').textContent=new Date().toLocal
 function renderKeys(){const keys=['7','8','9','C','4','5','6','BS','1','2','3','決定','↑','0','.','↓']; $('#keys').innerHTML=keys.map(k=>`<button type="button" class="key ${k==='C'?'danger':k==='BS'?'warn':(['↑','↓','決定'].includes(k)?'go':'')}" data-key="${k}">${k}</button>`).join(''); document.querySelectorAll('.key').forEach(b=>{b.addEventListener('click',e=>{e.preventDefault(); press(b.dataset.key);});});}
 function selectedItem(){return curP().items[state.selected]} function selectedKey(){return inputKey(selectedItem().id)}
 function commit(){const it=selectedItem(); if(!it)return; const v=state.inputs[selectedKey()]||''; judge(v,it); render()}
-function scrollSelectedCardToCenter(){const scroller=document.getElementById('cards'); const card=document.getElementById('card-'+state.selected); if(!scroller||!card)return; const offsetY = -40; const target=card.offsetTop-(scroller.clientHeight/2)+(card.offsetHeight/2); scroller.scrollTo({top:Math.max(0,target),behavior:'smooth'});}
+function scrollSelectedCardToCenter(){
+  const scroller = document.getElementById('cards');
+  const card = document.getElementById('card-' + state.selected);
+  if(!scroller || !card) return;
+
+  const topGap = 18; // 固定ヘッダー下からの余白。大きくするとカードが下がる
+
+  const target = card.offsetTop - topGap;
+
+  scroller.scrollTo({
+    top: Math.max(0, target),
+    behavior: 'smooth'
+  });
+}
 function move(delta){commit(); const n=curP().items.length; state.selected=Math.max(0,Math.min(n-1,state.selected+delta)); render(); setTimeout(scrollSelectedCardToCenter,50)}
 function press(k){let key=selectedKey(); let v=state.inputs[key]||''; if(k==='C')v=''; else if(k==='BS')v=v.slice(0,-1); else if(k==='決定'){state.inputs[key]=v; commit(); return} else if(k==='↑'){state.inputs[key]=v; move(-1); return} else if(k==='↓'){state.inputs[key]=v; move(1); return} else if(k==='.'&&!v.includes('.'))v+=k; else if(/^[0-9]$/.test(k))v+=k; state.inputs[key]=v; render()}
 window.selProduct=i=>{state.currentProduct=i;state.currentSlot=0;state.selected=0;render()}; window.selSlot=i=>{state.currentSlot=i;state.selected=0;render()}; window.selectCard=i=>{state.selected=i;render()};
