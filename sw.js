@@ -1,4 +1,4 @@
-const CACHE_NAME = 'measurement-entry-table-v04-pwa-1.4';
+const CACHE_NAME = 'measurement-entry-table-v04-pwa-1.5';
 const APP_SHELL = [
   './',
   './index.html',
