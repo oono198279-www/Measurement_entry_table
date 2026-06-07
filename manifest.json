@@ -1,0 +1,15 @@
+{
+  "name": "測定値記入表",
+  "short_name": "測定記入",
+  "description": "測定値を入力し、管理値判定を表示するPWAです。設定と略図は端末内に保存できます。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#0d1726",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
